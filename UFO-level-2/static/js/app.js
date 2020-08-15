@@ -49,21 +49,14 @@ function runEnter () {
     const inputCountryValue = (inputCountry.property('value')).toLowerCase();
     const inputShapeValue = (inputShape.property('value')).toLowerCase();
 
-    console.log(inputDateValue);
-    console.log(inputCityValue);
-    console.log(inputStateValue);
-    console.log(inputCountryValue);
-    console.log(inputShapeValue);
-
-    // filter the data
+    // create filter the data object
     const filteredData = tableData.filter(report => report.datetime == inputDateValue ||
                                                  report.city == inputCityValue ||
                                                  report.state == inputStateValue ||
                                                  report.country == inputCountryValue ||
                                                  report.shape == inputShapeValue);
 
-    console.log(filteredData);
-
+    // return table with filtered data if new input is available
     if (filteredData.length > 0){
         filteredData.forEach(report => {
             const row = tbody.append('tr');
@@ -73,6 +66,7 @@ function runEnter () {
             })
         });
     }
+    // return original table if input fields return to blanks
     else if (inputDateValue == '' &&
              inputCityValue =='' && 
              inputStateValue =='' &&
@@ -84,11 +78,12 @@ function runEnter () {
             Object.values(report).forEach(info => {
                 const cell = row.append('td');
                 cell.text(info);
-        })
-    });
+                    })
+                });
              }
+    // display a message to the user if criteria input do not match existing data
     else{
-        // display a warning message
+        // display a message to the user
         window.alert(`Sorry no reports available for criteria provided.`);
         // function to add data to the html table
         const fullTable = tableData.forEach(report => {
