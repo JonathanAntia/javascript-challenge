@@ -42,17 +42,16 @@ function runEnter () {
 
     const dates = tableData.map(date => date.datetime);
     if (dates.includes(inputValue)) {
+        // use the form input to filter data by date
+        let sighting = tableData.filter(report => report.datetime === inputValue);
 
-    // use the form input to filter data by date
-    let sighting = tableData.filter(report => report.datetime === inputValue);
-
-    sighting.forEach(report => {
-        let row = tbody.append('tr');
-        Object.values(report).forEach(info => {
-            let cell = row.append('td');
-            cell.text(info);
-        })
-    });
+        sighting.forEach(report => {
+            let row = tbody.append('tr');
+            Object.values(report).forEach(info => {
+                let cell = row.append('td');
+                cell.text(info);
+            })
+        });
     }
     else if (inputValue == '') {
         init();
