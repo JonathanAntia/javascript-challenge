@@ -53,6 +53,8 @@ function runEnter () {
     });
     }
     else{
+        // display a warning message
+        window.alert(`Sorry there are no report available for the date provided.`);
         // function to add data to the html table
         var fullTable = tableData.forEach(report => {
         var row = tbody.append('tr');
@@ -63,6 +65,3 @@ function runEnter () {
     });
     }
 }; 
-
-// TODO:
-// 1. create warning message when the dates are not available
