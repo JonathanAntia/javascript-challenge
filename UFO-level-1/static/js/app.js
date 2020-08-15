@@ -44,7 +44,7 @@ function runEnter () {
     if (dates.includes(inputValue)) {
         // use the form input to filter data by date
         let sighting = tableData.filter(report => report.datetime === inputValue);
-
+        // add the filtered data to a new table
         sighting.forEach(report => {
             let row = tbody.append('tr');
             Object.values(report).forEach(info => {
