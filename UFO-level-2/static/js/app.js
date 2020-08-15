@@ -5,13 +5,15 @@ const tableData = data;
 const tbody = d3.select('tbody');
 
 // function to add data to the html table
-const fullTable = tableData.forEach(report => {
-    const row = tbody.append('tr');
-    Object.values(report).forEach(info => {
-        const cell = row.append('td');
-        cell.text(info);
-    })
-});
+function init(){
+    const fullTable = tableData.forEach(report => {
+        let row = tbody.append('tr');
+        Object.values(report).forEach(info => {
+            let cell = row.append('td');
+            cell.text(info);
+        })
+    });
+}
 
 // select the button
 const button = d3.select('#filter-btn');
@@ -72,26 +74,16 @@ function runEnter () {
              inputStateValue =='' &&
              inputCountryValue == '' &&
              inputShapeValue == ''){
-        // add original data back to the html table
-        const fullTable = tableData.forEach(report => {
-            const row = tbody.append('tr');
-            Object.values(report).forEach(info => {
-                const cell = row.append('td');
-                cell.text(info);
-                    })
-                });
+                // add original data back to the html table
+                init();
              }
     // display a message to the user if criteria input do not match existing data
     else{
         // display a message to the user
         window.alert(`Sorry no reports available for criteria provided.`);
         // add original data back to the html table
-        const fullTable = tableData.forEach(report => {
-            const row = tbody.append('tr');
-        Object.values(report).forEach(info => {
-            const cell = row.append('td');
-            cell.text(info);
-        })
-    });
+        init();
     }
 }; 
+
+init();
