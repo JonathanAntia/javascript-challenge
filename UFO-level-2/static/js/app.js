@@ -35,7 +35,7 @@ function runEnter () {
     // delete the existing table data rows
     d3.selectAll('tbody>tr').remove();
 
-    // select the input from each the form and get the raw html nodes
+    // select the each input field and get the raw html nodes
     const inputDate = d3.select('#datetime');
     const inputCity = d3.select('#city');
     const inputState = d3.select('#state');
@@ -49,7 +49,7 @@ function runEnter () {
     const inputCountryValue = (inputCountry.property('value')).toLowerCase();
     const inputShapeValue = (inputShape.property('value')).toLowerCase();
 
-    // create filter the data object
+    // create a filtered the data object
     const filteredData = tableData.filter(report => report.datetime == inputDateValue ||
                                                  report.city == inputCityValue ||
                                                  report.state == inputStateValue ||
@@ -72,7 +72,7 @@ function runEnter () {
              inputStateValue =='' &&
              inputCountryValue == '' &&
              inputShapeValue == ''){
-        // function to add data to the html table
+        // add original data back to the html table
         const fullTable = tableData.forEach(report => {
             const row = tbody.append('tr');
             Object.values(report).forEach(info => {
@@ -85,7 +85,7 @@ function runEnter () {
     else{
         // display a message to the user
         window.alert(`Sorry no reports available for criteria provided.`);
-        // function to add data to the html table
+        // add original data back to the html table
         const fullTable = tableData.forEach(report => {
             const row = tbody.append('tr');
         Object.values(report).forEach(info => {
