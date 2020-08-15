@@ -1,27 +1,42 @@
 // from data.js
-var tableData = data;
+const tableData = data;
 
 // create a tbody variable to get a handle on the html element
-var tbody = d3.select('tbody');
+const tbody = d3.select('tbody');
 
 // function to add data to the html table
-var fullTable = tableData.forEach(report => {
-    var row = tbody.append('tr');
+const fullTable = tableData.forEach(report => {
+    const row = tbody.append('tr');
     Object.values(report).forEach(info => {
-        var cell = row.append('td');
+        const cell = row.append('td');
         cell.text(info);
     })
 });
 
 // select the button
-var button = d3.select('#filter-btn');
+const button = d3.select('#filter-btn');
 
 // select the form
-var form = d3.select('form');
+// const form = d3.select('form');
+const input1 = d3.select('#datetime');
+const input2 = d3.select('#city');
+const input3 = d3.select('#state');
+const input4 = d3.select('#country');
+const input5 = d3.select('#shape');
 
 // create an event handler for clicking the button or pressing the enter key
 button.on('click', runEnter);
-form.on('submit', runEnter);
+// form.on('submit', runEnter);
+// input1.on('keydown', runEnter);
+window.addEventListener('keyup', function (event){
+    if (event.defaultPrevented){
+        return;
+    }
+    if (event.keyCode === 13){
+        runEnter();
+    }
+})
+
 
 /// create a function to run for both events
 function runEnter () {
@@ -30,21 +45,21 @@ function runEnter () {
     d3.selectAll('tbody>tr').remove();
 
     // prevent the page from refreshing
-    d3.event.preventDefault();
+    // d3.event.preventDefault();
 
     // select the input from each the form and get the raw html nodes
-    var inputDate = d3.select('#datetime');
-    var inputCity = d3.select('#city');
-    var inputState = d3.select('#state');
-    var inputCountry = d3.select('#country');
-    var inputShape = d3.select('#shape');
+    const inputDate = d3.select('#datetime');
+    const inputCity = d3.select('#city');
+    const inputState = d3.select('#state');
+    const inputCountry = d3.select('#country');
+    const inputShape = d3.select('#shape');
 
     // get the value property of the each input
-    var inputDateValue = inputDate.property('value');
-    var inputCityValue = (inputCity.property('value')).toLowerCase();
-    var inputStateValue = (inputState.property('value')).toLowerCase();
-    var inputCountryValue = (inputCountry.property('value')).toLowerCase();
-    var inputShapeValue = (inputShape.property('value')).toLowerCase();
+    const inputDateValue = inputDate.property('value');
+    const inputCityValue = (inputCity.property('value')).toLowerCase();
+    const inputStateValue = (inputState.property('value')).toLowerCase();
+    const inputCountryValue = (inputCountry.property('value')).toLowerCase();
+    const inputShapeValue = (inputShape.property('value')).toLowerCase();
 
     console.log(inputDateValue);
     console.log(inputCityValue);
@@ -53,7 +68,7 @@ function runEnter () {
     console.log(inputShapeValue);
 
     // filter the data
-    var filteredData = tableData.filter(report => report.datetime == inputDateValue ||
+    const filteredData = tableData.filter(report => report.datetime == inputDateValue ||
                                                  report.city == inputCityValue ||
                                                  report.state == inputStateValue ||
                                                  report.country == inputCountryValue ||
@@ -63,19 +78,21 @@ function runEnter () {
 
     if (filteredData.length > 0){
         filteredData.forEach(report => {
-            var row = tbody.append('tr');
+            const row = tbody.append('tr');
             Object.values(report).forEach(info => {
-                var cell = row.append('td');
+                const cell = row.append('td');
                 cell.text(info);
             })
         });
     }
     else{
+        // display a warning message
+        window.alert(`No report available for criteria provided... Displaying all data.`);
         // function to add data to the html table
-        var fullTable = tableData.forEach(report => {
-        var row = tbody.append('tr');
+        const fullTable = tableData.forEach(report => {
+            const row = tbody.append('tr');
         Object.values(report).forEach(info => {
-            var cell = row.append('td');
+            const cell = row.append('td');
             cell.text(info);
         })
     });
