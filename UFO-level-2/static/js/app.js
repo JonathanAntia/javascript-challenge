@@ -16,18 +16,9 @@ const fullTable = tableData.forEach(report => {
 // select the button
 const button = d3.select('#filter-btn');
 
-// select the form
-// const form = d3.select('form');
-const input1 = d3.select('#datetime');
-const input2 = d3.select('#city');
-const input3 = d3.select('#state');
-const input4 = d3.select('#country');
-const input5 = d3.select('#shape');
-
 // create an event handler for clicking the button or pressing the enter key
 button.on('click', runEnter);
-// form.on('submit', runEnter);
-// input1.on('keydown', runEnter);
+
 window.addEventListener('keyup', function (event){
     if (event.defaultPrevented){
         return;
@@ -43,9 +34,6 @@ function runEnter () {
 
     // delete the existing table data rows
     d3.selectAll('tbody>tr').remove();
-
-    // prevent the page from refreshing
-    // d3.event.preventDefault();
 
     // select the input from each the form and get the raw html nodes
     const inputDate = d3.select('#datetime');
@@ -85,9 +73,23 @@ function runEnter () {
             })
         });
     }
+    else if (inputDateValue == '' &&
+             inputCityValue =='' && 
+             inputStateValue =='' &&
+             inputCountryValue == '' &&
+             inputShapeValue == ''){
+        // function to add data to the html table
+        const fullTable = tableData.forEach(report => {
+            const row = tbody.append('tr');
+            Object.values(report).forEach(info => {
+                const cell = row.append('td');
+                cell.text(info);
+        })
+    });
+             }
     else{
         // display a warning message
-        window.alert(`No report available for criteria provided... Displaying all data.`);
+        window.alert(`Sorry no reports available for criteria provided.`);
         // function to add data to the html table
         const fullTable = tableData.forEach(report => {
             const row = tbody.append('tr');
