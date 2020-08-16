@@ -48,25 +48,11 @@ function runEnter () {
     var filterCriteriaProvided = {};
 
     // check if input criteria was provided and add to filteCriteria object
-    if (!(inputDateValue == "")){
-        filterCriteriaProvided.datetime = inputDateValue;
-    }
-    
-    if (!(inputCityValue == "")){
-        filterCriteriaProvided.city = inputCityValue;
-    }
-
-    if (!(inputStateValue == "")){
-        filterCriteriaProvided.state = inputStateValue;
-    }
-
-    if (!(inputCountryValue == "")){
-        filterCriteriaProvided.country = inputCountryValue;
-    }
-
-    if (!(inputShapeValue == "")){
-        filterCriteriaProvided.shape = inputShapeValue;
-    }
+    if (!(inputDateValue == "")){filterCriteriaProvided.datetime = inputDateValue;}
+    if (!(inputCityValue == "")){filterCriteriaProvided.city = inputCityValue;}
+    if (!(inputStateValue == "")){filterCriteriaProvided.state = inputStateValue;}
+    if (!(inputCountryValue == "")){filterCriteriaProvided.country = inputCountryValue;}
+    if (!(inputShapeValue == "")){filterCriteriaProvided.shape = inputShapeValue;}
 
     console.log(filterCriteriaProvided);
 
@@ -78,9 +64,9 @@ function runEnter () {
     console.log(`values: ${values}`);
     
     // filter the data by criteria provided
-    var result = tableData.filter(function(e) {
-      return keys.every(function(a) {
-        return values.includes(e[a])
+    var result = tableData.filter(e => {
+        keys.every(a => {
+        values.includes(e[a])
       })
     })
     
