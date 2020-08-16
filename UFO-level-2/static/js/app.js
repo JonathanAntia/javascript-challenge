@@ -37,30 +37,58 @@ function runEnter () {
     // delete the existing table data rows
     d3.selectAll('tbody>tr').remove();
 
-    // select the each input field and get the raw html nodes
-    const inputDate = d3.select('#datetime');
-    const inputCity = d3.select('#city');
-    const inputState = d3.select('#state');
-    const inputCountry = d3.select('#country');
-    const inputShape = d3.select('#shape');
-
     // get the value property of the each input
-    const inputDateValue = inputDate.property('value');
-    const inputCityValue = (inputCity.property('value')).toLowerCase();
-    const inputStateValue = (inputState.property('value')).toLowerCase();
-    const inputCountryValue = (inputCountry.property('value')).toLowerCase();
-    const inputShapeValue = (inputShape.property('value')).toLowerCase();
+    const inputDateValue = d3.select('#datetime').property('value');
+    const inputCityValue = (d3.select('#city').property('value')).toLowerCase();
+    const inputStateValue = (d3.select('#state').property('value')).toLowerCase();
+    const inputCountryValue = (d3.select('#country').property('value')).toLowerCase();
+    const inputShapeValue = (d3.select('#shape').property('value')).toLowerCase();
 
-    // create a filtered the data object
-    const filteredData = tableData.filter(report => report.datetime == inputDateValue ||
-                                                 report.city == inputCityValue ||
-                                                 report.state == inputStateValue ||
-                                                 report.country == inputCountryValue ||
-                                                 report.shape == inputShapeValue);
+    // create an empty object to hold the user input
+    var filterCriteriaProvided = {};
+
+    // check if input criteria was provided and add to filteCriteria object
+    if (!(inputDateValue == "")){
+        filterCriteriaProvided.datetime = inputDateValue;
+    }
+    
+    if (!(inputCityValue == "")){
+        filterCriteriaProvided.city = inputCityValue;
+    }
+
+    if (!(inputStateValue == "")){
+        filterCriteriaProvided.state = inputStateValue;
+    }
+
+    if (!(inputCountryValue == "")){
+        filterCriteriaProvided.country = inputCountryValue;
+    }
+
+    if (!(inputShapeValue == "")){
+        filterCriteriaProvided.shape = inputShapeValue;
+    }
+
+    console.log(filterCriteriaProvided);
+
+    // create arrays for keys and values of filter criteria provided
+    var keys = Object.keys(filterCriteriaProvided);
+    var values = Object.values(filterCriteriaProvided);
+
+    console.log(`keys: ${keys}`);
+    console.log(`values: ${values}`);
+    
+    // filter the data by criteria provided
+    var result = tableData.filter(function(e) {
+      return keys.every(function(a) {
+        return values.includes(e[a])
+      })
+    })
+    
+    console.log(result);
 
     // return table with filtered data if new input is available
-    if (filteredData.length > 0){
-        filteredData.forEach(report => {
+    if (result.length > 0){
+        result.forEach(report => {
             const row = tbody.append('tr');
             Object.values(report).forEach(info => {
                 const cell = row.append('td');
@@ -74,9 +102,9 @@ function runEnter () {
              inputStateValue =='' &&
              inputCountryValue == '' &&
              inputShapeValue == ''){
-                // add original data back to the html table
-                init();
-             }
+        // add original data back to the html table
+        init();
+    }
     // display a message to the user if criteria input do not match existing data
     else{
         // display a message to the user
