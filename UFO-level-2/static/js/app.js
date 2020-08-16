@@ -45,7 +45,7 @@ function runEnter () {
     const inputShapeValue = (d3.select('#shape').property('value')).toLowerCase();
 
     // create an empty object to hold the user input
-    var filterCriteriaProvided = {};
+    let filterCriteriaProvided = {};
 
     // check if input criteria was provided and add to filteCriteria object
     if (!(inputDateValue == "")){filterCriteriaProvided.datetime = inputDateValue;}
@@ -54,23 +54,16 @@ function runEnter () {
     if (!(inputCountryValue == "")){filterCriteriaProvided.country = inputCountryValue;}
     if (!(inputShapeValue == "")){filterCriteriaProvided.shape = inputShapeValue;}
 
-    console.log(filterCriteriaProvided);
-
     // create arrays for keys and values of filter criteria provided
-    var keys = Object.keys(filterCriteriaProvided);
-    var values = Object.values(filterCriteriaProvided);
-
-    console.log(`keys: ${keys}`);
-    console.log(`values: ${values}`);
+    const keys = Object.keys(filterCriteriaProvided);
+    const values = Object.values(filterCriteriaProvided);
     
     // filter the data by criteria provided
-    var result = tableData.filter(e => {
-        keys.every(a => {
-        values.includes(e[a])
+    const result = tableData.filter(function(e) {
+        return keys.every(function(a) {
+          return values.includes(e[a])
+        })
       })
-    })
-    
-    console.log(result);
 
     // return table with filtered data if new input is available
     if (result.length > 0){
